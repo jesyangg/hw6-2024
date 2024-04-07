@@ -12,6 +12,12 @@ window.addEventListener('DOMContentLoaded', function() {
   var video = document.getElementById('player1');
   video.autoplay = false;
   video.loop = false;
+  var volumeSlider = document.getElementById('slider');
+  var volumeDisplay = document.getElementById('volume');
+
+ 
+  volumeSlider.value = video.volume * 100; // Convert volume fraction to a percentage
+  volumeDisplay.textContent = volumeSlider.value + '%'; // Update the volume display text
 
 
   // Get the buttons and other elements
@@ -26,6 +32,8 @@ window.addEventListener('DOMContentLoaded', function() {
   var vintageButton = document.getElementById('vintage');
   var originalButton = document.getElementById('orig');
 
+
+  
 
   
   // Add event listeners to buttons, etc.
@@ -62,15 +70,24 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 
  // Log the current location of the video
- console.log("Current video time: " + video.currentTime + " seconds");
+    console.log("Current video time: " + video.currentTime + " seconds");
 
 });
 
-  muteButton.addEventListener('click', function() {
-      video.muted = !video.muted; // Toggle mute
-  });
+muteButton.addEventListener('click', function() {
+  if (video.muted) {
+    // If the video is currently muted, unmute it
+    video.muted = false;
+    muteButton.textContent = "Mute"; // Change the button text to "Mute"
+} else {
+    // If the video is currently unmuted, mute it
+    video.muted = true;
+    muteButton.textContent = "Unmute"; // Change the button text to "Unmute"
+}
+});
 
   volumeSlider.addEventListener('input', function() {
+
       video.volume = this.value / 100; // Convert slider value to a fraction
       volumeDisplay.textContent = this.value + '%';
   });
